@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+</head>
+<body>
+<form th:action="@{/processStudentForm}" th:object="${student}" method="post">
+    FirstName:<input type="text" th:field="*{firstName}"/>
+    LastName:<input type="text" th:field="*{lastName}"/>
+    Country:<select th:field="*{country}">
+    <option th:value="brazil">Brazil</option>
+    <option th:value="france">France</option>
+</select>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

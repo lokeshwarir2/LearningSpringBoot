@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Home page</title>
+</head>
+<body>
+Welcome to the homepage!!!
+<br>
+<hr>
+User:<span sec:authentication="principal.username"></span>
+<br>
+Password:<span sec:authentication="principal.authorities"></span>
+<hr>
+<div sec:authorize="hasRole('Manager')">
+<p><a th:href="@{/leaders}">leadership meeting</a>(only for manager peeps)</p>
+</div>
+<div sec:authorize="hasRole('Admin')">
+<p><a th:href="@{/systems}">it system meetings</a>(only for admin peeps)</p></body>
+</div>
+<form action="#" th:action="@{/logout}" method="post"><input type="submit" value="Logout"></form>
+
+</html>
