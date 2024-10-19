@@ -1,9 +1,7 @@
 package com.luv2code.cruddemo;
 
 import com.luv2code.cruddemo.dao.AppDAO;
-import com.luv2code.cruddemo.entity.Course;
-import com.luv2code.cruddemo.entity.Instructor;
-import com.luv2code.cruddemo.entity.InstructorDetail;
+import com.luv2code.cruddemo.entity.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,18 +18,75 @@ public class CruddemoApplication {
 	}
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO){
-		return runner->{ //createInstructor(appDAO);};
-			//findInstructor(appDAO);
-			//deleteInstructor(appDAO);};
-			//findInstructorDetails(appDAO);};
-			//deleteInstructorDetailById(appDAO);};
-			//createInstructorWithCourses(appDAO);};
-			//findInsturctorWithCourse(appDAO);};
-			//findCourseForInstructor(appDAO);};
-			//findCourseForInstructorBYJoinFetch(appDAO);};
-			//updateInstructor(appDAO);};
-			//updateCourse(appDAO);};
-			deleteCourseById(appDAO);};
+		return runner->{
+			//createCourseAndStudents(appDAO);};
+			//findCourseAndStudents(appDAO);};
+			//findStudentAndCourse(appDAO);};
+			//addMoreCoursesForStudent(appDAO);};
+			//deleteCourse(appDAO);};
+			deleteStudent(appDAO);};
+
+	}
+
+	private void deleteStudent(AppDAO appDAO) {
+		int id=1;
+		appDAO.deleteStudentById(id);
+	}
+
+	private void addMoreCoursesForStudent(AppDAO appDAO) {
+		int theId=2;
+		Student tempStudent=appDAO.findStudentAndCoursesByStudentId(theId);
+		Course tempCourse1=new Course("python");
+		Course tempCourse2=new Course("c");
+		tempStudent.addCourse(tempCourse1);
+		tempStudent.addCourse(tempCourse2);
+		System.out.println("student "+tempStudent+"couses"+tempStudent.getCourses());
+		appDAO.update(tempStudent);
+
+	}
+
+	private void findStudentAndCourse(AppDAO appDAO) {
+		int theId=2;
+		Student tempStudent=appDAO.findStudentAndCoursesByStudentId(theId);
+		System.out.println("Student "+tempStudent+"courses: "+tempStudent.getCourses());
+	}
+
+	private void findCourseAndStudents(AppDAO appDAO) {
+		int theId=10;
+		Course tempCourse=appDAO.findCourseAndStudentByCourseId(theId);
+		System.out.println("loaded course "+tempCourse+" Students= "+tempCourse.getStudents());
+	}
+
+	private void createCourseAndStudents(AppDAO appDAO) {
+		Course c=new Course("Java");
+		Student s1=new Student("loki","reddy","c.om");
+		Student s2=new Student("vicky","kumar","c.om");
+		c.addStudent(s1);
+		c.addStudent(s2);
+		System.out.println("course: "+c+" "+c.getStudents());
+		appDAO.saveCourse(c);
+
+	}
+
+	private void deleteCourse(AppDAO appDAO) {
+		int theId=10;
+		appDAO.deleteCourseById(theId);
+	}
+
+	private void retrieveCourseAndReviews(AppDAO appDAO) {
+		int theId=10;
+		Course tempCourse=appDAO.findCourseAndReviewsByCourseId(theId);
+		System.out.println(tempCourse);
+		System.out.println(tempCourse.getReviews());
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+		Course tempCourse=new Course("java");
+		tempCourse.add(new Review("good course"));
+		tempCourse.add(new Review("bad "));
+		tempCourse.add(new Review("vicky you are very good"));
+		appDAO.saveReview(tempCourse);
+		System.out.println(tempCourse.getReviews());
 	}
 
 	private void deleteCourseById(AppDAO appDAO){
@@ -116,5 +171,7 @@ public class CruddemoApplication {
 
 	}
 }
+
+
 
 

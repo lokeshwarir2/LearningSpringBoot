@@ -4,6 +4,7 @@ import com.luv2code.cruddemo.dao.AppDAO;
 import com.luv2code.cruddemo.entity.Course;
 import com.luv2code.cruddemo.entity.Instructor;
 import com.luv2code.cruddemo.entity.InstructorDetail;
+import com.luv2code.cruddemo.entity.Review;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,7 +32,31 @@ public class CruddemoApplication {
 			//findCourseForInstructorBYJoinFetch(appDAO);};
 			//updateInstructor(appDAO);};
 			//updateCourse(appDAO);};
-			deleteCourseById(appDAO);};
+			//deleteCourseById(appDAO);};
+			//createCourseAndReviews(appDAO);};
+			//retrieveCourseAndReviews(appDAO);};
+			deleteCourseAndReviews(appDAO);};
+	}
+
+	private void deleteCourseAndReviews(AppDAO appDAO) {
+		int theId=10;
+		appDAO.deleteCourseById(theId);
+	}
+
+	private void retrieveCourseAndReviews(AppDAO appDAO) {
+		int theId=10;
+		Course tempCourse=appDAO.findCourseAndReviewsByCourseId(theId);
+		System.out.println(tempCourse);
+		System.out.println(tempCourse.getReviews());
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+		Course tempCourse=new Course("java");
+		tempCourse.add(new Review("good course"));
+		tempCourse.add(new Review("bad "));
+		tempCourse.add(new Review("vicky you are very good"));
+		appDAO.saveReview(tempCourse);
+		System.out.println(tempCourse.getReviews());
 	}
 
 	private void deleteCourseById(AppDAO appDAO){
